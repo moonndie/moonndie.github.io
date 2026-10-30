@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>КРИТИЧЕСКАЯ ОШИБКА: КИРИЛЛ_BRAIN_BUG</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Montserrat:wght@400;700;900&display=swap');
+
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        .heading-font {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch-text {
+            animation: glitch 0.3s infinite ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .shake-anim {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        @keyframes flashbangAnim {
+            0% { opacity: 0; background-color: white; }
+            15% { opacity: 1; background-color: white; }
+            60% { opacity: 1; background-color: white; }
+            100% { opacity: 0; background-color: transparent; }
+        }
+
+        .flashbang-active {
+            animation: flashbangAnim 2.2s forwards ease-out;
+        }
+
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-card {
+            background: rgba(31, 41, 55, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(236, 72, 153, 0.25);
+        }
+    </style>
+</head>
+<body class="min-h-screen w-full flex items-center justify-center p-3 sm:p-6 selection:bg-pink-500 selection:text-white">
+
+    <!-- ФЛЕШБЭНГ ОВЕРЛЕЙ -->
+    <div id="flashbang-overlay" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center opacity-0 px-4">
+        <h1 id="flashbang-text" class="text-4xl sm:text-7xl md:text-9xl font-black text-black tracking-widest heading-font uppercase text-center hidden">
+            FLASHBANG! ⚡
+        </h1>
+    </div>
+
+    <!-- УВЕДОМЛЕНИЕ ОБ ОШИБКЕ -->
+    <div id="error-toast" class="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 z-40 hidden max-w-sm sm:max-w-md w-[92%] bg-red-950/95 border-2 border-red-500 text-red-200 px-4 sm:px-6 py-3 sm:py-4 rounded-xl shadow-2xl backdrop-blur-md transition-all duration-300">
+        <div class="flex items-center gap-3">
+            <span class="text-xl sm:text-2xl shrink-0">⚠</span>
+            <div>
+                <p class="font-bold text-xs sm:text-sm uppercase text-red-400">ОШИБКА: ДЕЙСТВИЕ НЕВОЗМОЖНО</p>
+                <p class="text-[11px] sm:text-xs mt-0.5 text-red-200 leading-snug">Тупизм зашкаливает. Отмена процесса невозможно!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 1: КРИТИЧЕСКАЯ ОШИБКА -->
+    <main id="screen-1" class="max-w-xl w-full glass-panel rounded-2xl p-5 sm:p-8 md:p-10 shadow-2xl text-center relative z-10 transition-all duration-500">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-[10px] sm:text-xs font-semibold mb-4 sm:mb-6">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            SYSTEM CRITICAL ERROR
+        </div>
+        
+        <h1 class="text-xl sm:text-3xl md:text-4xl font-black text-red-500 mb-3 sm:mb-4 heading-font leading-tight glitch-text">
+            НАЙДЕНА ОШИБКА ТУПИЗМА КИРИЛЛА
+        </h1>
+        <p class="text-[11px] sm:text-xs md:text-sm text-gray-400 mb-6 sm:mb-8 tracking-wide">
+            [ERROR_CODE: CRITICAL_KIRILL_BRAIN_ERROR_0x80070005]<br>
+            Система обнаружения намеков Ани заблокирована.
+        </p>
+
+        <div class="bg-black/70 p-3 sm:p-4 rounded-xl border border-red-900/50 mb-6 sm:mb-8 text-left font-mono text-[10px] sm:text-xs text-red-300 space-y-1">
+            <p>> Scanning system logic... FAILURE</p>
+            <p>> Detecting romantic hints... 0% PROCESSED</p>
+            <p>> Status: Kirill is completely clueless.</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <button id="btn-fix" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-lg shadow-emerald-500/20 active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer">
+                ⚙ Исправить
+            </button>
+            <button id="btn-decline" class="w-full sm:w-auto bg-gray-800 hover:bg-red-950 text-red-400 border border-red-800/40 font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all active:scale-95 text-xs sm:text-sm uppercase tracking-wider cursor-pointer">
+                ✖ Отклонить
+            </button>
+        </div>
+    </main>
+
+    <!-- ЭКРАН 2: ПРОЦЕСС ИСПРАВЛЕНИЯ И МЕМЫ -->
+    <main id="screen-2" class="max-w-lg w-full glass-panel rounded-2xl p-5 sm:p-8 shadow-2xl text-center hidden relative z-10">
+        <h2 class="text-lg sm:text-2xl font-bold text-pink-400 mb-1 sm:mb-2 heading-font">
+            ИСПРАВЛЕНИЕ ТУПИЗМА...
+        </h2>
+        <p class="text-[11px] sm:text-xs text-gray-400 mb-4 sm:mb-6">Пересчитываем архивные уровни заторможенности...</p>
+
+        <!-- Галерея мемов -->
+        <div class="relative w-full h-64 sm:h-80 md:h-96 mb-5 sm:mb-6 rounded-xl overflow-hidden glass-card p-2 sm:p-3 flex flex-col justify-center items-center">
+            
+            <!-- Картинка 1 -->
+            <div id="meme-1" class="meme-card absolute inset-0 p-2 sm:p-3 flex flex-col items-center justify-between transition-all duration-500 opacity-100 scale-100">
+                <div class="w-full h-48 sm:h-64 rounded-lg overflow-hidden bg-black/40 flex items-center justify-center">
+                    <img src="image_314da3.jpg" class="w-full h-full object-cover rounded-lg" alt="Кирилл Волк">
+                </div>
+                <p class="text-[11px] sm:text-xs md:text-sm font-semibold text-pink-300 mt-2">
+                    Уровень #1: Опасный волк альфа-самец 🐺
+                </p>
+            </div>
+
+            <!-- Картинка 2 -->
+            <div id="meme-2" class="meme-card absolute inset-0 p-2 sm:p-3 flex flex-col items-center justify-between transition-all duration-500 opacity-0 scale-95 pointer-events-none">
+                <div class="w-full h-48 sm:h-64 rounded-lg overflow-hidden bg-black/40 flex items-center justify-center">
+                    <img src="image_314d9b.png" class="w-full h-full object-cover rounded-lg" alt="Кирилл Котик">
+                </div>
+                <p class="text-[11px] sm:text-xs md:text-sm font-semibold text-purple-300 mt-2">
+                    Уровень #2: Стеснительный котик-альтушка 🙈
+                </p>
+            </div>
+
+            <!-- Картинка 3 -->
+            <div id="meme-3" class="meme-card absolute inset-0 p-2 sm:p-3 flex flex-col items-center justify-between transition-all duration-500 opacity-0 scale-95 pointer-events-none">
+                <div class="w-full h-48 sm:h-64 rounded-lg overflow-hidden bg-black/40 flex items-center justify-center">
+                    <img src="image_314d7d.jpg" class="w-full h-full object-cover rounded-lg" alt="Тормоз Кирилл">
+                </div>
+                <p class="text-[11px] sm:text-xs md:text-sm font-semibold text-amber-300 mt-2">
+                    Уровень #3: Главный тормоз на свадьбе 🛑
+                </p>
+            </div>
+
+            <!-- Картинка 4 (Новое фото) -->
+            <div id="meme-4" class="meme-card absolute inset-0 p-2 sm:p-3 flex flex-col items-center justify-between transition-all duration-500 opacity-0 scale-95 pointer-events-none">
+                <div class="w-full h-48 sm:h-64 rounded-lg overflow-hidden bg-black/40 flex items-center justify-center">
+                    <img src="image_314d5d.jpg" class="w-full h-full object-cover rounded-lg" alt="Кирилл">
+                </div>
+                <p class="text-[11px] sm:text-xs md:text-sm font-semibold text-blue-300 mt-2">
+                    Уровень #4: Чилловый парень, которому пора сделать шаг 😎
+                </p>
+            </div>
+        </div>
+
+        <!-- Прогресс-бар -->
+        <div class="space-y-1.5 sm:space-y-2">
+            <div class="flex justify-between text-[11px] sm:text-xs font-bold">
+                <span class="text-gray-400">ОТСЧЕТ ИСПРАВЛЕНИЯ:</span>
+                <span id="progress-percent" class="text-emerald-400 font-mono text-xs sm:text-sm">0%</span>
+            </div>
+            <div class="w-full bg-gray-950 h-3 rounded-full overflow-hidden p-0.5 border border-gray-800">
+                <div id="progress-bar" class="bg-gradient-to-r from-pink-500 via-purple-500 to-emerald-400 h-full w-0% rounded-full transition-all duration-200"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ЭКРАН 3: ПРИЗНАНИЕ И ВЫБОР -->
+    <main id="screen-3" class="max-w-lg w-full glass-panel rounded-2xl p-5 sm:p-8 md:p-10 shadow-2xl text-center hidden relative z-10">
+        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 text-xl sm:text-2xl">
+            ✓
+        </div>
+        
+        <h2 class="text-lg sm:text-2xl font-bold text-emerald-400 mb-3 sm:mb-4 heading-font">
+            ОШИБКА ИСПРАВЛЕНА!
+        </h2>
+        
+        <div class="glass-card p-4 sm:p-6 rounded-xl mb-6 sm:mb-8 border-pink-500/30 text-left relative">
+            <div class="absolute -top-2.5 left-3 sm:left-4 bg-pink-600 text-white text-[9px] sm:text-[10px] uppercase font-bold px-2 py-0.5 rounded">
+                Запрос от Ани
+            </div>
+            <p class="text-xs sm:text-base text-gray-200 leading-relaxed font-sans pt-1">
+                «Слушай сюда, Кирилл. Мой друг уже задолбался смотреть, как ты тормозишь и не замечаешь очевидного! Поэтому хватит тянуть резину. 
+                <span class="text-pink-400 font-bold block mt-2 text-base sm:text-lg">Кирилл, давай встречаться?»</span>
+            </p>
+        </div>
+
+        <!-- Кнопки выбора -->
+        <div id="buttons-container" class="flex flex-row gap-3 sm:gap-4 justify-center items-center relative min-h-[60px] sm:min-h-[70px]">
+            <button id="btn-yes" class="flex-1 sm:flex-initial bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-bold text-base sm:text-lg px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-xl shadow-emerald-500/30 active:scale-95 cursor-pointer z-10">
+                ДА ❤
+            </button>
+            <button id="btn-no" class="flex-1 sm:flex-initial bg-rose-600 hover:bg-rose-700 text-white font-bold text-base sm:text-lg px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-xl cursor-pointer z-10">
+                НЕТ 💀
+            </button>
+        </div>
+    </main>
+
+    <!-- ЭКРАН 4: ФИНАЛ ПРИ СОГЛАСИИ -->
+    <main id="screen-4" class="max-w-xl w-full glass-panel rounded-2xl p-5 sm:p-8 shadow-2xl text-center hidden relative z-10">
+        <h1 class="text-xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-300 to-emerald-400 mb-2 heading-font">
+            ОФИЦИАЛЬНО: КОРОЛЬ И ПРИНЦЕССА! ❤
+        </h1>
+        <p class="text-xs sm:text-sm text-gray-300 mb-4 sm:mb-6 font-sans">
+            Ответ "ДА" зафиксирован! Вы теперь вместе. 🎉
+        </p>
+
+        <!-- Главное фото пары -->
+        <div class="w-full rounded-xl overflow-hidden glass-card p-1.5 sm:p-2 border-2 border-pink-500/40 shadow-2xl mb-4 sm:mb-6">
+            <img src="image_314d5d.jpg" class="w-full h-auto max-h-[50vh] sm:max-h-[60vh] object-contain rounded-lg mx-auto" alt="Король и Принцесса">
+        </div>
+
+        <p class="text-[10px] sm:text-xs text-gray-400 font-mono">
+            Уведомление отправлено в Telegram. Готовьтесь к свиданию!
+        </p>
+    </main>
+
+    <script>
+        // ССЫЛКА НА БЭКЕНД РЕНДЕРА (УКАЖИ СВОЙ АДРЕС)
+        const BACKEND_URL = "https://your-render-bot-app.onrender.com/vote";
+
+        // ЭЛЕМЕНТЫ DOM
+        const screen1 = document.getElementById('screen-1');
+        const screen2 = document.getElementById('screen-2');
+        const screen3 = document.getElementById('screen-3');
+        const screen4 = document.getElementById('screen-4');
+
+        const btnFix = document.getElementById('btn-fix');
+        const btnDecline = document.getElementById('btn-decline');
+        const errorToast = document.getElementById('error-toast');
+
+        const flashbangOverlay = document.getElementById('flashbang-overlay');
+        const flashbangText = document.getElementById('flashbang-text');
+
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercent = document.getElementById('progress-percent');
+
+        const meme1 = document.getElementById('meme-1');
+        const meme2 = document.getElementById('meme-2');
+        const meme3 = document.getElementById('meme-3');
+        const meme4 = document.getElementById('meme-4');
+
+        const btnYes = document.getElementById('btn-yes');
+        const btnNo = document.getElementById('btn-no');
+
+        // ЗВУКОВЫЕ ЭФФЕКТЫ ЧЕРЕЗ WEB AUDIO API (Без внешних mp3)
+        function playFlashbangSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(1200, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 1.5);
+                
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.5);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.start();
+                osc.stop(ctx.currentTime + 1.5);
+            } catch (e) {
+                console.log('Audio error:', e);
+            }
+        }
+
+        function playVictorySound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const notes = [261.63, 329.63, 392.00, 523.25];
+                notes.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime + idx * 0.12);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + idx * 0.12 + 0.4);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime + idx * 0.12);
+                    osc.stop(ctx.currentTime + idx * 0.12 + 0.4);
+                });
+            } catch (e) {
+                console.log('Audio error:', e);
+            }
+        }
+
+        // ФУНКЦИЯ ОТПРАВКИ УВЕДОМЛЕНИЯ В TELEGRAM
+        async function notifyTelegram(choice) {
+            try {
+                await fetch(BACKEND_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ choice: choice })
+                });
+            } catch (err) {
+                console.log("Ошибка связи с ботом:", err);
+            }
+        }
+
+        // КНОПКА "ОТКЛОНИТЬ"
+        btnDecline.addEventListener('click', () => {
+            screen1.classList.add('shake-anim');
+            errorToast.classList.remove('hidden');
+
+            setTimeout(() => {
+                screen1.classList.remove('shake-anim');
+            }, 400);
+
+            setTimeout(() => {
+                errorToast.classList.add('hidden');
+            }, 3500);
+
+            notifyTelegram('attempted_decline');
+        });
+
+        // КНОПКА "ИСПРАВИТЬ" -> ФЛЕШБЭНГ
+        btnFix.addEventListener('click', () => {
+            playFlashbangSound();
+            flashbangText.classList.remove('hidden');
+            flashbangOverlay.classList.add('flashbang-active');
+
+            setTimeout(() => {
+                screen1.classList.add('hidden');
+                screen2.classList.remove('hidden');
+                startFixProcess();
+            }, 500);
+
+            setTimeout(() => {
+                flashbangOverlay.classList.remove('flashbang-active');
+                flashbangText.classList.add('hidden');
+            }, 2200);
+        });
+
+        // ПРОЦЕСС ИСПРАВЛЕНИЯ (ОТСЧЕТ 1-100% И СМЕНА МЕМОВ)
+        function startFixProcess() {
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 1;
+                progressPercent.textContent = `${progress}%`;
+                progressBar.style.width = `${progress}%`;
+
+                if (progress === 25) {
+                    meme1.classList.replace('opacity-100', 'opacity-0');
+                    meme1.classList.replace('scale-100', 'scale-95');
+                    meme2.classList.replace('opacity-0', 'opacity-100');
+                    meme2.classList.replace('scale-95', 'scale-100');
+                } else if (progress === 50) {
+                    meme2.classList.replace('opacity-100', 'opacity-0');
+                    meme2.classList.replace('scale-100', 'scale-95');
+                    meme3.classList.replace('opacity-0', 'opacity-100');
+                    meme3.classList.replace('scale-95', 'scale-100');
+                } else if (progress === 75) {
+                    meme3.classList.replace('opacity-100', 'opacity-0');
+                    meme3.classList.replace('scale-100', 'scale-95');
+                    meme4.classList.replace('opacity-0', 'opacity-100');
+                    meme4.classList.replace('scale-95', 'scale-100');
+                }
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        screen2.classList.add('hidden');
+                        screen3.classList.remove('hidden');
+                    }, 600);
+                }
+            }, 70);
+        }
+
+        // УБЕГАЮЩАЯ КНОПКА "НЕТ"
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - 140);
+            const y = Math.random() * (window.innerHeight - 80);
+            btnNo.style.position = 'fixed';
+            btnNo.style.left = `${Math.max(20, x)}px`;
+            btnNo.style.top = `${Math.max(20, y)}px`;
+            btnNo.style.zIndex = '50';
+            
+            notifyTelegram('no_button_evaded');
+        }
+
+        btnNo.addEventListener('mouseenter', moveNoButton);
+        btnNo.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+        btnNo.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // КНОПКА "ДА"
+        btnYes.addEventListener('click', async () => {
+            playVictorySound();
+            screen3.classList.add('hidden');
+            screen4.classList.remove('hidden');
+
+            const duration = 3.5 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 6,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#ec4899', '#10b981', '#a855f7']
+                });
+                confetti({
+                    particleCount: 6,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#ec4899', '#10b981', '#a855f7']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+
+            await notifyTelegram('accepted_yes');
+        });
+    </script>
+</body>
+</html>
